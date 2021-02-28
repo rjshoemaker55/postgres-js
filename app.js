@@ -1,5 +1,5 @@
 const express = require('express')
-const exhbs = require('handlebars')
+const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const path = require('path')
 
@@ -12,6 +12,13 @@ db.authenticate()
   .catch((err) => console.log('Error', err))
 
 const app = express()
+
+// Handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
   res.send('Index route')
