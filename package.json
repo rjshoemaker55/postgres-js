@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -12,9 +13,6 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rjshoemaker55/postgres-js/issues"
-  },
   "homepage": "https://github.com/rjshoemaker55/postgres-js#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
