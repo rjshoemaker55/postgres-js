@@ -3,6 +3,7 @@ const Sequelize = require('sequelize')
 module.exports = new Sequelize('gigs', 'postgres', 'postgres', {
   host: 'localhost',
   dialect: 'postgres',
+
   pool: {
     max: 5,
     min: 0,
