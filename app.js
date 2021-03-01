@@ -21,7 +21,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-  res.send('Index route')
+  res.render('index', { layout: 'landing' })
 })
 
 // Gig routes
