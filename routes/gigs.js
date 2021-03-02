@@ -19,27 +19,53 @@ router.get('/add', (req, res) => res.render('add'))
 
 // Add gig
 router.post('/add', (req, res) => {
-  const data = {
-    title: 'Looking for a React developer.',
-    technologies: 'React, Javascript, HTML, CSS',
-    budget: '$3000',
-    description:
-      'Hello this is the description for the react developer position thank you for your interest balajajisodfjiajisj ijasidfjiajijd aijsfijaijsidjfia isjfiajsidfjiajidf iajdsf iajdsfiaj idsfjia jsdifjaisdjfiajidsfjiajis fiji ias dif aijsdf aijisd fiadifja,.',
-    contactEmail: 'test@test.test'
+  let { title, technologies, budget, description, contact_email } = req.body
+  let errors = []
+
+  if (!title) {
+    errors.push({ text: 'Please add a title.' })
+  }
+  if (!technologies) {
+    errors.push({ text: 'Please add some technologies.' })
+  }
+  if (!description) {
+    errors.push({ text: 'Please add a description.' })
+  }
+  if (!contact_email) {
+    errors.push({ text: 'Please add a contact email.' })
   }
 
-  let { title, technologies, budget, description, contactEmail } = data
+  // Check for errrors
+  if (errors.length > 0) {
+    res.render('add', {
+      errors,
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email
+    })
+  } else {
+    if (!budget) {
+      budget = 'Unknown'
+    } else {
+      budget = `$${budget}`
+    }
 
-  // Insert into table
-  Gig.create({
-    title,
-    technologies,
-    budget,
-    description,
-    contactEmail
-  })
-    .then((gig) => res.redirect('/gigs'))
-    .catch((err) => console.log('Error', err))
+    // Make list lowercase and remove space after commas
+    technologies = technologies.toLowerCase().replace(/, /g, ',')
+
+    // Insert into table
+    Gig.create({
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email
+    })
+      .then((gig) => res.redirect('/gigs'))
+      .catch((err) => console.log('Error', err))
+  }
 })
 
 module.exports = router
